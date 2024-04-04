@@ -1,9 +1,11 @@
-import { Button } from "@/shared/ui/button";
+import { CreateTagForm } from "@/features/tag-list/pub/create-tag-form";
+import { TagList } from "@/features/tag-list/pub/tag-list";
 
-export default function Home() {
+export default async function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button>Кнопка</Button>
+    <main className="flex min-h-screen flex-col p-8">
+      <CreateTagForm className="w-[300px]" revalidatePagePath="/" />
+      <TagList revalidatePagePath="/" />
     </main>
   );
 }
