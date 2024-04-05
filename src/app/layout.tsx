@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/shared/ui/utils";
 import React from "react";
 import "./globals.css";
+import { AppHeader } from "@/widgets/app-header/app-header";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
+        <AppHeader />
         {children}
       </body>
     </html>
