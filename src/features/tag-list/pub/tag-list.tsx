@@ -17,6 +17,7 @@ export async function TagList({
 
   return (
     <div className="space-y-4 py-4">
+      <h1>Список тегов:</h1>
       {tagList.map((element) => (
         <TagItem
           tag={element}
