@@ -23,12 +23,12 @@ export function TagItem({
     });
   };
   return (
-    <Card>
-      <CardHeader>
+    <Card className="w-[300px]">
+      <CardHeader className="p-4">
         <CardTitle>{tag.name}</CardTitle>
         <CardDescription>Tag description</CardDescription>
       </CardHeader>
-      <CardFooter className="space-x-2">
+      <CardFooter className="p-4 space-x-2">
         <Button variant="outline">Изменить</Button>
         <Button onClick={handleDelete} disabled={isLoadingDelete}>
           Удалить
