@@ -27,6 +27,8 @@ export type SessionEntity = {
   expires: string;
 };
 
+// Projections
+
 export type Profile = {
   email: string;
   name: string | null;
