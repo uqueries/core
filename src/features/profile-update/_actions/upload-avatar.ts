@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { AVATAR_FILE_KEY } from "@/features/profile-update/_constants";
 import { BadRequestError } from "@/shared/lib/errors";
+import { fileStorage } from "@/shared/lib/file-storage";
 
 const resultSchema = z.object({
   avatar: z.object({
@@ -15,4 +16,10 @@ export const uploadAvatarAction = async (formData: FormData) => {
   if (!(file instanceof File)) {
     throw new BadRequestError();
   }
+
+  const storedFile = await fileStorage.uploadImage(file, "avatar");
+
+  return resultSchema.parse({
+    avatar: storedFile,
+  });
 };
