@@ -16,6 +16,9 @@ import {
 import { Input } from "@/shared/ui/input";
 import { AvatarField } from "./avatar-field";
 import { Profile } from "@/entities/user/profile";
+import { UserId } from "@/entities/user/user";
+import { useUpdateProfile } from "@/features/profile-update/_vm/use-update-profile";
+import { Spinner } from "@/shared/ui/spinner";
 
 const profileFormSchema = z.object({
   name: z
@@ -38,9 +41,12 @@ const getDefaultValues = (profile: Profile) => ({
 });
 
 export function ProfileForm({
-  submitText = "Сохранить",
+  userId,
   profile,
+  onSuccess,
+  submitText = "Сохранить",
 }: {
+  userId: UserId;
   profile: Profile;
   onSuccess?: () => void;
   submitText?: string;
@@ -50,9 +56,21 @@ export function ProfileForm({
     defaultValues: getDefaultValues(profile),
   });
 
+  const updateProfile = useUpdateProfile();
+
+  const handleSubmit = form.handleSubmit(async (data) => {
+    const newProfile = await updateProfile.update({
+      userId,
+      data,
+    });
+
+    form.reset(getDefaultValues(newProfile.profile));
+    onSuccess?.();
+  });
+
   return (
     <Form {...form}>
-      <form className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-8">
         <FormField
           control={form.control}
           name="email"
@@ -94,7 +112,15 @@ export function ProfileForm({
             </FormItem>
           )}
         />
-        <Button type="submit">{submitText}</Button>
+        <Button type="submit">
+          {updateProfile.isPending && (
+            <Spinner
+              className="mr-2 h-4 w-4 animate-spin"
+              aria-label="Обновление профиля"
+            />
+          )}
+          {submitText}
+        </Button>
       </form>
     </Form>
   );
