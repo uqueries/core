@@ -59,6 +59,7 @@ export function ProfileForm({
   const updateProfile = useUpdateProfile();
 
   const handleSubmit = form.handleSubmit(async (data) => {
+    console.log(data);
     const newProfile = await updateProfile.update({
       userId,
       data,
@@ -101,12 +102,15 @@ export function ProfileForm({
         <FormField
           control={form.control}
           name="image"
-          disabled
           render={({ field }) => (
             <FormItem>
               <FormLabel>Аватарка</FormLabel>
               <FormControl>
-                <AvatarField value={field.value} onChange={field.onChange} />
+                <AvatarField
+                  profile={profile}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
