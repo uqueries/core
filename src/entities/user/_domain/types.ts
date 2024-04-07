@@ -31,6 +31,6 @@ export type SessionEntity = {
 
 export type Profile = {
   email: string;
-  name: string | null;
-  image: string | null;
+  name?: string | null;
+  image?: string | null;
 };
