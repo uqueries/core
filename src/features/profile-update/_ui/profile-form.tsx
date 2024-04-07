@@ -15,7 +15,7 @@ import {
 } from "@/shared/ui/form";
 import { Input } from "@/shared/ui/input";
 import { AvatarField } from "./avatar-field";
-import { Profile, UserId } from "@/entities/user/_domain/types";
+import { Profile } from "@/entities/user/profile";
 
 const profileFormSchema = z.object({
   name: z
@@ -39,15 +39,15 @@ const getDefaultValues = (profile: Profile) => ({
 
 export function ProfileForm({
   submitText = "Сохранить",
-  //profile,
+  profile,
 }: {
-  //profile: Profile;
+  profile: Profile;
   onSuccess?: () => void;
   submitText?: string;
 }) {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    //defaultValues: getDefaultValues(profile),
+    defaultValues: getDefaultValues(profile),
   });
 
   return (
