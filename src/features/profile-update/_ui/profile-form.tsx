@@ -59,7 +59,6 @@ export function ProfileForm({
   const updateProfile = useUpdateProfile();
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    console.log(data);
     const newProfile = await updateProfile.update({
       userId,
       data,

@@ -1,16 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import { selectFile, validateFileSize } from "@/shared/lib/file";
-import {
-  AVATAR_FILE_KEY,
-  AVATAR_MAX_SIZE_MB,
-} from "@/features/profile-update/_constants";
+import { selectFile } from "@/shared/lib/file";
+import { AVATAR_FILE_KEY } from "@/features/profile-update/_constants";
 import { uploadAvatarAction } from "@/features/profile-update/_actions/upload-avatar";
 
 export const useUploadAvatar = ({
-  onError,
   onSuccess,
 }: {
-  onError?: (type?: "big-size") => void;
   onSuccess?: (avatarPath: string) => void;
 }) => {
   const { mutateAsync, isPending } = useMutation({
@@ -21,20 +16,21 @@ export const useUploadAvatar = ({
   });
 
   const handleFileSelect = async () => {
-    const file = await selectFile("image/*");
+    return await selectFile("image/*");
+  };
 
-    if (!validateFileSize(file, AVATAR_MAX_SIZE_MB)) {
-      return onError?.("big-size");
-    }
+  const upload = async (fileData: string) => {
+    const blob = await (await fetch(fileData)).blob();
 
     const formData = new FormData();
-    formData.set(AVATAR_FILE_KEY, file);
+    formData.set(AVATAR_FILE_KEY, blob);
 
     await mutateAsync(formData);
   };
 
   return {
     handleFileSelect,
+    upload,
     isPending,
   };
 };
