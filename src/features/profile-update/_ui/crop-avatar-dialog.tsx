@@ -55,6 +55,9 @@ export function CropAvatarDialog({
       <InputAngle get={avatarAngle} set={setAngle} />
       <DialogFooter>
         <DialogClose asChild>
+          <Button variant="secondary">Отмена</Button>
+        </DialogClose>
+        <DialogClose asChild>
           <Button onClick={handleSave}>Обрезать</Button>
         </DialogClose>
       </DialogFooter>
