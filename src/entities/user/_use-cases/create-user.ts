@@ -12,8 +12,13 @@ type CreateUser = {
 
 export class CreateUserUseCase {
   async exec(data: CreateUser) {
-    const adminEmails = privateConfig.SUPER_EMAILS?.split(",") ?? [];
-    const role = adminEmails.includes(data.email) ? ROLES.SUPER : ROLES.USER;
+    const superEmails = privateConfig.SUPER_EMAILS?.split(",") ?? [];
+    const adminEmails = privateConfig.ADMIN_EMAILS?.split(",") ?? [];
+    const role = superEmails.includes(data.email)
+      ? ROLES.SUPER
+      : adminEmails.includes(data.email)
+        ? ROLES.ADMIN
+        : ROLES.USER;
 
     const user: UserEntity = {
       id: createId(),

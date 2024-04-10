@@ -8,7 +8,7 @@ test("create/delete tag", async ({ page }) => {
   await expect(
     page.getByText("Test TagTag descriptionИзменитьУдалить"),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Удалить" }).nth(1).click();
+  await page.getByRole("button", { name: "Удалить" }).click();
   await expect(
     page.getByText("Test TagTag descriptionИзменитьУдалить"),
   ).not.toBeVisible();
